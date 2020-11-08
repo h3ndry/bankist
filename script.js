@@ -3,29 +3,41 @@
 ///////////////////////////////////////
 // Modal window
 
-const modal = document.querySelector('.modal');
-const overlay = document.querySelector('.overlay');
-const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+// redefine the docucument.querySelector and addEventListener
+window.$ = document.querySelector.bind(document);
+window.$$ = document.querySelectorAll.bind(document);
 
-const openModal = function () {
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
+Node.prototype.on = window.on = function (name, fn) {
+  this.addEventListener(name, fn);
+}
+
+NodeList.prototype.__proto__ = Array.prototype;
+NodeList.prototype.on = function(name, fn) {
+  this.forEach(function (elem, i) {
+    elem.on(name, fn)
+  });
+}
+
+
+const openModal = function (e) {
+  e.preventDefault();
+  $('.modal').classList.remove('hidden');
+  $('.overlay').classList.remove('hidden');
 };
 
 const closeModal = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
+  $('.modal').classList.add('hidden');
+  $('.overlay').classList.add('hidden');
 };
 
-for (let i = 0; i < btnsOpenModal.length; i++)
-  btnsOpenModal[i].addEventListener('click', openModal);
+$$('.btn--show-modal').forEach(btn => btn.on('click', openModal));
 
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
 
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+$('.btn--close-modal').on('click', closeModal);
+$('.overlay').on('click', closeModal);
+
+document.on('keydown', function (e) {
+  if (e.key === 'Escape' && !$('.modal').classList.contains('hidden')) {
     closeModal();
   }
 });
