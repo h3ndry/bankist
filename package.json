@@ -1,0 +1,16 @@
+{
+  "name": "banklist",
+  "version": "1.0.0",
+  "description": "Simple front end website for a fictional bank",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Hendry",
+    "Banking",
+    "Website"
+  ],
+  "author": "Hendry",
+  "license": "ISC"
+}
