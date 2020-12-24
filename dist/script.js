@@ -114,3 +114,48 @@ $('.nav').on('mouseout', function(e){
   }
 
 })
+
+// const init_cords = $('#section--1').getBoundingClientRect()
+
+// window.on('scroll', function(){
+//   if (window.scrollY > init_cords.top)
+//     $('.nav').classList.add('sticky');
+//   else
+//     $('.nav').classList.remove('sticky');
+
+// })
+//
+
+const stickyNav = function(entries) {
+
+  const [entry] = entries
+// isIntersecting
+  if(!entry.isIntersecting)
+    $('.nav').classList.add('sticky');
+  else
+    $('.nav').classList.remove('sticky');
+
+}
+
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: '-90px'
+});
+headerObserver.observe($('.header'))
+
+
+const revealSection = function(entries, observer) {
+
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15
+})
+
+$$('.section').forEach(function(section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+})
